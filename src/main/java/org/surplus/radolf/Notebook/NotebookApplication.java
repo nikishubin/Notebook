@@ -21,7 +21,7 @@ public class NotebookApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 20; i++) {
 			repository.save(new Note("Note + " + (i+1), new Date(), false));
 		}
 	}

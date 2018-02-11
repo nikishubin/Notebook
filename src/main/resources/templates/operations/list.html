@@ -16,7 +16,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="note : ${notes}">
+    <tr th:each="note : ${notes.content}">
         <td class="message" th:text="${note.id}">Note ID</td>
         <td class="message" th:text="${note.message}">Note Message</td>
         <td class="message" th:text="${note.creationDate}"></td>
