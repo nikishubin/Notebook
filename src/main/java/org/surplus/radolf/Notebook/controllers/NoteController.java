@@ -8,6 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.surplus.radolf.Notebook.entity.Note;
 import org.surplus.radolf.Notebook.service.NoteService;
 
+import java.util.Date;
+
 @Controller
 public class NoteController {
 
@@ -33,7 +35,7 @@ public class NoteController {
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String createNote(@RequestParam("noteMessage") String message) {
-        service.create(new Note(message));
+        service.create(new Note(message, new Date(), false));
         return "redirect:/";
     }
 

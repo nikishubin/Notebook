@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.surplus.radolf.Notebook.entity.Note;
 import org.surplus.radolf.Notebook.repository.NoteRepository;
 
+import java.util.Date;
+
 @SpringBootApplication
 public class NotebookApplication implements CommandLineRunner {
 
@@ -20,7 +22,7 @@ public class NotebookApplication implements CommandLineRunner {
 	@Override
 	public void run(String... strings) throws Exception {
 		for (int i = 0; i < 5; i++) {
-			repository.save(new Note("Note + " + (i+1)));
+			repository.save(new Note("Note + " + (i+1), new Date(), false));
 		}
 	}
 }

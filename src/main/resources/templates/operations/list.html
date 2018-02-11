@@ -9,6 +9,8 @@
     <tr>
         <th>ID</th>
         <th>Comments</th>
+        <th>Date</th>
+        <th>Finished</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
@@ -17,6 +19,8 @@
     <tr th:each="note : ${notes}">
         <td class="message" th:text="${note.id}">Note ID</td>
         <td class="message" th:text="${note.message}">Note Message</td>
+        <td class="message" th:text="${note.creationDate}"></td>
+        <td class="message" th:text="${note.finished}">Finished?</td>
         <td>
             <a th:href="@{'/{noteID}/update'(noteID=${note.id})}" class="edit">
                 Edit
