@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: header"></head>
+<body>
+<nav th:replace="template :: navbar"></nav>
+<main role="main" class="container">
+    <div class="starter-template" th:replace="operations/list :: notebook"></div>
+</main>
+<footer th:replace="template :: footer"></footer>
+</body>
+</html>
