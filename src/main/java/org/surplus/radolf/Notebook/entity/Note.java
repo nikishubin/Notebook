@@ -1,19 +1,21 @@
 package org.surplus.radolf.Notebook.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
+@Table(name = "notebook", schema = "test", catalog = "")
 public class Note {
 
     @Id
     @GeneratedValue
     private int id;
-
+    @Column(name = "message")
     private String message;
-    private Date date;
+    @Column(name = "date")
+    private Timestamp date;
+    @Column(name = "done")
     private boolean done;
 
     public Note() {
@@ -21,7 +23,7 @@ public class Note {
 
     public Note(String message) {
         this.message = message;
-        this.date = new Date();
+        this.date = new Timestamp(new Date().getTime());
         this.done = false;
     }
 
@@ -41,8 +43,8 @@ public class Note {
         return date;
     }
 
-    public void setDate(Date creationDate) {
-        this.date = creationDate;
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
     public boolean isDone() {

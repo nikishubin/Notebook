@@ -9,6 +9,7 @@ import org.surplus.radolf.Notebook.entity.Note;
 import org.surplus.radolf.Notebook.repository.NoteRepository;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class NoteServiceImpl implements NoteService{
     @Override
     public Note updateNote(Integer id, String message, boolean done) {
         Note updated = repository.findOne(id);
-        updated.setDate(new Date());
+        updated.setDate(new Timestamp(new Date().getTime()));
         updated.setDone(done);
         updated.setMessage(message);
         repository.save(updated);
