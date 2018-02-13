@@ -41,7 +41,7 @@ public class NoteServiceImpl implements NoteService{
     @Override
     public Note updateNote(Integer id, String message, boolean done) {
         Note updated = repository.findOne(id);
-        updated.setDate(new Timestamp(new Date().getTime()));
+        updated.setDate(new Date());
         updated.setDone(done);
         updated.setMessage(message);
         repository.save(updated);

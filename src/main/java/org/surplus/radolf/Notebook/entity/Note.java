@@ -14,7 +14,7 @@ public class Note {
     @Column(name = "message")
     private String message;
     @Column(name = "date")
-    private Timestamp date;
+    private Date date;
     @Column(name = "done")
     private boolean done;
 
@@ -23,7 +23,7 @@ public class Note {
 
     public Note(String message) {
         this.message = message;
-        this.date = new Timestamp(new Date().getTime());
+        this.date = new Date();
         this.done = false;
     }
 
@@ -43,7 +43,7 @@ public class Note {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
