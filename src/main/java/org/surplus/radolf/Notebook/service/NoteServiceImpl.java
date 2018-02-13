@@ -9,45 +9,51 @@ import org.surplus.radolf.Notebook.entity.Note;
 import org.surplus.radolf.Notebook.repository.NoteRepository;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class NoteServiceImpl implements NoteService{
 
+    private NoteRepository repository;
+
     @Autowired
-    NoteRepository repository;
-
-    @Override
-    @Transactional
-    public Note create(Note note) {
-        return repository.save(note);
+    public void setProductRepository(NoteRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    @Transactional
-    public Note delete(int id) {
-        Note deletedNote = repository.findOne(id);
-        repository.delete(id);
-        return deletedNote;
-    }
-
-    @Override
-    @Transactional
-    public List<Note> findAll() {
+    public Iterable<Note> listAllNotes() {
         return repository.findAll();
     }
 
     @Override
-    @Transactional
-    public Note edit(int id, String message) {
-        Note editedNote = repository.findOne(id);
-        editedNote.setMessage(message);
-        return editedNote;
+    public Note getNoteById(Integer id) {
+        return repository.findOne(id);
     }
 
     @Override
-    @Transactional
-    public Note findById(int id) {
-        return repository.findOne(id);
+    public Note saveNote(Note note) {
+        return repository.save(note);
+    }
+
+    @Override
+    public Note updateNote(Integer id, String message, boolean done) {
+        Note updated = repository.findOne(id);
+        updated.setDate(new Date());
+        updated.setDone(done);
+        updated.setMessage(message);
+        repository.save(updated);
+        return updated;
+    }
+
+    @Override
+    public void deleteNote(Integer id) {
+        repository.delete(id);
+    }
+
+    @Override
+    public Page<Note> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 }

@@ -5,12 +5,12 @@
 <body>
 <nav th:replace="template :: navbar"></nav>
 <main role="main" class="container">
-    <form method="post" name="message_form" id="message_form" th:action="@{/update}" role="form">
+    <form method="post" name="message_form" id="message_form" th:action="@{/note}" role="form">
         <div class="form-group">
             <label for="noteMessage">Note:</label>
-            <input type="text" class="form-control" id="noteMessage" th:name="noteMessage" th:value="${note.message}" />
+            <input type="text" class="form-control" id="noteMessage" th:name="noteMessage" th:value="${note.message}"/>
         </div>
-        <input type="hidden" class="form-control" id="noteID" th:name="noteID" th:value="${note.id}" />
+        <input type="hidden" class="form-control" id="noteID" th:name="noteID" th:value="${note.id}"/>
         <button type="submit" id="submit" class="btn btn-primary">Submit</button>
     </form>
 </main>

@@ -13,16 +13,16 @@ public class Note {
     private int id;
 
     private String message;
-    private Date creationDate;
-    private boolean finished;
+    private Date date;
+    private boolean done;
 
     public Note() {
     }
 
-    public Note(String message, Date creationDate, boolean finished) {
+    public Note(String message) {
         this.message = message;
-        this.creationDate = creationDate;
-        this.finished = finished;
+        this.date = new Date();
+        this.done = false;
     }
 
     public int getId() {
@@ -37,19 +37,19 @@ public class Note {
         this.message = message;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public Date getDate() {
+        return date;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void setDate(Date creationDate) {
+        this.date = creationDate;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public boolean isDone() {
+        return done;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+    public void setDone(boolean finished) {
+        this.done = finished;
     }
 }

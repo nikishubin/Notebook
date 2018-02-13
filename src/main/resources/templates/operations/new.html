@@ -1,18 +1,21 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="template :: header"></head>
+<head th:replace="fragments/head :: head"></head>
 <body>
-<nav th:replace="template :: navbar"></nav>
-<main role="main" class="container">
-    <form method="post" name="message_form" id="message_form" th:action="@{/new}" role="form">
-        <div class="form-group">
-            <label for="noteMessage">Note:</label>
-            <input type="text" class="form-control" id="noteMessage" th:name="noteMessage" placeholder="Enter new note." />
-        </div>
-        <button type="submit" id="submit" class="btn btn-primary">Submit</button>
-    </form>
-</main>
-<footer th:replace="template :: footer"></footer>
+<div class="container">
+    <div th:replace="fragments/header :: header"></div>
+    <div class="container">
+        <form class="form-horizontal" th:action="@{/save}" name="input_form" id="input_form"
+              method="post" role="form">
+            <div class="form-group">
+                <label for="message" class="col-sm-2 control-label">Note:</label>
+                <input type="text" class="form-control" id="message" th:name="message" placeholder="Enter your note." />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

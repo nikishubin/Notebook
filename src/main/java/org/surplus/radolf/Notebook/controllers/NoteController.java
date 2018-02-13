@@ -1,54 +1,63 @@
 package org.surplus.radolf.Notebook.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.surplus.radolf.Notebook.entity.Note;
 import org.surplus.radolf.Notebook.service.NoteService;
-
-import java.util.Date;
 
 @Controller
 public class NoteController {
 
-    @Autowired
-    NoteService service;
+    private NoteService service;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String main(Model model) {
-        model.addAttribute("notes", service.findAll());
-        return "layout";
+
+    @Autowired
+    public void setNoteService(NoteService service) {
+        this.service = service;
     }
 
-    @RequestMapping(value = "{noteID}/delete", method = RequestMethod.GET)
-    public String deleteNote(@PathVariable("noteID") int id) {
-        service.delete(id);
+    @GetMapping("/")
+    public String list(Model model, Pageable pageable) {
+        Page<Note> notePage = service.findAll(pageable);
+        PageWrapper<Note> page = new PageWrapper<Note>(notePage, "/");
+        model.addAttribute("notes", page.getContent());
+        model.addAttribute("page", page);
+        return "index";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        Note note = service.getNoteById(id);
+        model.addAttribute("note", note);
+        return "operations/edit";
+    }
+
+    @PostMapping("/update")
+    public String saveNote(@RequestParam Integer id, @RequestParam String message,
+                           @RequestParam(value = "done", required = false) boolean done) {
+        service.updateNote(id, message, done);
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    @GetMapping("/new")
     public String newNote() {
         return "operations/new";
     }
 
-    @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String createNote(@RequestParam("noteMessage") String message) {
-        service.create(new Note(message, new Date(), false));
+    @PostMapping("/save")
+    public String updateNote(@RequestParam String message) {
+        service.saveNote(new Note(message));
         return "redirect:/";
     }
 
-    @RequestMapping(value = "{noteID}/update", method = RequestMethod.GET)
-    public ModelAndView editNote(@PathVariable("noteID") int id) {
-        ModelAndView editedNote = new ModelAndView("operations/update");
-        editedNote.addObject("note", service.findById(id));
-        return editedNote;
-    }
-
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateNote(@RequestParam("noteMessage") String message, @RequestParam("noteID") int id) {
-        service.edit(id, message);
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        service.deleteNote(id);
         return "redirect:/";
     }
+
 }

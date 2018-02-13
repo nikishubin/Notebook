@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body>
+<div class="container">
+    <div th:replace="fragments/header :: header"></div>
+    <div th:if="${not #lists.isEmpty(notes)}">
+        <div th:replace="operations/list :: notebook"></div>
+    </div>
+    <div class="empty-template" th:if="${#lists.isEmpty(notes)}">
+        <h1>Notebook is empty</h1>
+        <p class="lead">Just add another note through the navigation bar. Or... <br/>Congratulations on the successful
+            completion of the plans!</p>
+    </div>
+</div>
+</body>
+</html>

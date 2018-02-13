@@ -4,36 +4,78 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <div th:fragment="notebook">
-<table class="table table-hover">
-    <thead class="thead-light">
-    <tr>
-        <th>ID</th>
-        <th>Comments</th>
-        <th>Date</th>
-        <th>Finished</th>
-        <th>Edit</th>
-        <th>Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="note : ${notes.content}">
-        <td class="message" th:text="${note.id}">Note ID</td>
-        <td class="message" th:text="${note.message}">Note Message</td>
-        <td class="message" th:text="${note.creationDate}"></td>
-        <td class="message" th:text="${note.finished}">Finished?</td>
-        <td>
-            <a th:href="@{'/{noteID}/update'(noteID=${note.id})}" class="edit">
-                Edit
-            </a>
-        </td>
+    <table class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th>#</th>
+            <th>Message</th>
+            <th>Date</th>
+            <th>Done</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="note, iterationStatus : ${notes}">
+            <td th:text="${iterationStatus.count + (page.size * (page.number-1))}">#</td>
+            <td th:text="${note.message}">Message</td>
+            <td th:text="${#dates.format(note.date, 'EEE, d MMM yyyy HH:mm')}">Date</td>
+            <td th:text="${note.done}">Done</td>
+            <td><a th:href="@{'/edit/{id}'(id=${note.id})}"><i class="fa fa-edit" style="font-size:20px"></i></a></td>
+            <td><a th:href="@{'/delete/{id}'(id=${note.id})}"><i class="fa fa-trash" style="font-size:20px"></i></a></td>
+        </tr>
+        </tbody>
+    </table>
 
-        <td>
-            <a th:href="@{'/{noteID}/delete'(noteID=${note.id})}" class="delete">
-                Delete
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="pagination"><p>Showing <span class="badge"
+                                                     th:text="${page.size * (page.number-1) + 1}"></span> to
+                <span class="badge"
+                      th:text="${page.lastPage ? page.totalElements : page.size * (page.number-1)+ page.size}"></span>
+                of
+                <span class="badge"
+                      th:text="${page.totalElements}"></span>
+                notes</p></div>
+        </div>
+
+        <div class="col-sm-7">
+            <!-- Pagination Bar -->
+            <div th:fragment='paginationbar'>
+                <div class="text-center">
+                    <ul class='pagination pagination-centered'>
+                        <li th:class="${page.firstPage}?'disabled':''">
+                            <span th:if='${page.firstPage}'>← First</span>
+                            <a th:if='${not page.firstPage}' th:href='@{${page.url}(page=0,size=${page.size})}'>←
+                                First</a>
+                        </li>
+                        <li th:class="${page.hasPreviousPage}? '' : 'disabled'">
+                            <span th:if='${not page.hasPreviousPage}'>«</span>
+                            <a th:if='${page.hasPreviousPage}'
+                               th:href='@{${page.url}(page=${page.number-2},size=${page.size})}'
+                               title='Go to previous page'>«</a>
+                        </li>
+                        <li th:each='item : ${page.items}' th:class="${item.current}? 'active' : ''">
+                            <span th:if='${item.current}' th:text='${item.number}'>1</span>
+                            <a th:if='${not item.current}'
+                               th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'><span
+                                    th:text='${item.number}'>1</span></a>
+                        </li>
+                        <li th:class="${page.hasNextPage}? '' : 'disabled'">
+                            <span th:if='${not page.hasNextPage}'>»</span>
+                            <a th:if='${page.hasNextPage}'
+                               th:href='@{${page.url}(page=${page.number},size=${page.size})}'
+                               title='Go to next page'>»</a>
+                        </li>
+                        <li th:class="${page.lastPage}? 'disabled' : ''">
+                            <span th:if='${page.lastPage}'>Last →</span>
+                            <a th:if='${not page.lastPage}'
+                               th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>Last →</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </html>
