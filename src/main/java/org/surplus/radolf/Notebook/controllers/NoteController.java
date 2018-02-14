@@ -13,7 +13,8 @@ import org.surplus.radolf.Notebook.service.NoteService;
 public class NoteController {
 
     private NoteService service;
-
+    private String filterMethod = "ALL";
+    private String sortDateMethod = "ASC";
 
     @Autowired
     public void setNoteService(NoteService service) {
@@ -22,11 +23,25 @@ public class NoteController {
 
     @GetMapping("/")
     public String list(Model model, Pageable pageable) {
-        Page<Note> notePage = service.findAll(pageable);
+        Page<Note> notePage = filterAndSort(pageable);
         PageWrapper<Note> page = new PageWrapper<Note>(notePage, "/");
         model.addAttribute("notes", page.getContent());
+        model.addAttribute("sort", sortDateMethod);
+        model.addAttribute("filter", filterMethod);
         model.addAttribute("page", page);
         return "index";
+    }
+
+    @GetMapping("/filter/{filter}")
+    public String filterChoose(@PathVariable String filter) {
+        filterMethod = filter;
+        return "redirect:/";
+    }
+
+    @GetMapping("/sort/{sortDate}")
+    public String sortChoose(@PathVariable String sortDate) {
+        sortDateMethod = sortDate;
+        return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
@@ -58,6 +73,43 @@ public class NoteController {
     public String delete(@PathVariable Integer id) {
         service.deleteNote(id);
         return "redirect:/";
+    }
+
+    private Page<Note> filterAndSort(Pageable pageable) {
+        Page<Note> page = null;
+        switch (filterMethod) {
+            case "ALL":
+                switch (sortDateMethod) {
+                    case "ASC":
+                        page = service.findAllByOrderByDateAsc(pageable);
+                        break;
+                    case "DESC":
+                        page = service.findAllByOrderByDateDesc(pageable);
+                        break;
+                }
+                break;
+            case "TRUE":
+                switch (sortDateMethod) {
+                    case "ASC":
+                        page = service.findAllByDoneTrueOrderByDateAsc(pageable);
+                        break;
+                    case "DESC":
+                        page = service.findAllByDoneTrueOrderByDateDesc(pageable);
+                        break;
+                }
+                break;
+            case "FALSE":
+                switch (sortDateMethod) {
+                    case "ASC":
+                        page = service.findAllByDoneFalseOrderByDateAsc(pageable);
+                        break;
+                    case "DESC":
+                        page = service.findAllByDoneFalseOrderByDateDesc(pageable);
+                        break;
+                }
+                break;
+        }
+        return page;
     }
 
 }

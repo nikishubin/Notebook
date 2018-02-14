@@ -7,10 +7,14 @@ import org.surplus.radolf.Notebook.entity.Note;
 import java.util.List;
 
 public interface NoteService {
-    Iterable<Note> listAllNotes();
     Note getNoteById(Integer id);
-    Note saveNote(Note note);
-    Note updateNote(Integer id, String message, boolean done);
+    void saveNote(Note note);
+    void updateNote(Integer id, String message, boolean done);
     void deleteNote(Integer id);
-    Page<Note> findAll(Pageable pageable);
+    Page<Note> findAllByOrderByDateAsc(Pageable pageable);
+    Page<Note> findAllByOrderByDateDesc(Pageable pageable);
+    Page<Note> findAllByDoneTrueOrderByDateAsc(Pageable pageable);
+    Page<Note> findAllByDoneTrueOrderByDateDesc(Pageable pageable);
+    Page<Note> findAllByDoneFalseOrderByDateAsc(Pageable pageable);
+    Page<Note> findAllByDoneFalseOrderByDateDesc(Pageable pageable);
 }

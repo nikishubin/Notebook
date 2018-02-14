@@ -3,12 +3,23 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="header">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" th:href="@{/}">Notebook</a>
                 <ul class="nav navbar-nav">
-                    <li><a href="#" th:href="@{/new}">New Post</a></li>
+                    <li><a href="#" th:href="@{/new}">New Note</a></li>
+                    <li class="dropdown" id="menu1">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+                            Views
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{'/filter/{filter}' (filter = 'ALL')}">All</a></li>
+                            <li><a th:href="@{'/filter/{filter}' (filter = 'TRUE')}">Done</a></li>
+                            <li><a th:href="@{'/filter/{filter}' (filter = 'FALSE')}">Not Done</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

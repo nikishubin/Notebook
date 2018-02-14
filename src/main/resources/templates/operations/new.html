@@ -10,8 +10,7 @@
         <form class="form-horizontal" th:action="@{/save}" name="input_form" id="input_form"
               method="post" role="form">
             <div class="form-group">
-                <label for="message" class="col-sm-2 control-label">Note:</label>
-                <input type="text" class="form-control" id="message" th:name="message" placeholder="Enter your note." />
+                <input type="text" class="form-control" id="message" th:name="message" placeholder="Enter your note." maxlength="100"/>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

@@ -13,8 +13,7 @@
                 <input type="hidden" id="id" th:name="id" th:value="*{id}"/>
             </div>
             <div class="form-group">
-                <label for="message" class="col-sm-2 control-label">Note:</label>
-                <input type="text" class="form-control" id="message" th:name="message" th:value="*{message}" />
+                <input type="text" class="form-control" id="message" th:name="message" th:value="*{message}" maxlength="100"/>
             </div>
             <div class="form-group">
                 <div class="form-check">

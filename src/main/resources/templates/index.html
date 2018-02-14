@@ -8,11 +8,22 @@
     <div th:if="${not #lists.isEmpty(notes)}">
         <div th:replace="operations/list :: notebook"></div>
     </div>
-    <div class="empty-template" th:if="${#lists.isEmpty(notes)}">
-        <h1>Notebook is empty</h1>
-        <p class="lead">Just add another note through the navigation bar. Or... <br/>Congratulations on the successful
-            completion of the plans!</p>
+    <div class="align-template" th:if="${#lists.isEmpty(notes)}">
+        <div th:if="${filter} == 'ALL'">
+            <h1>Notebook is empty</h1>
+            <p class="lead">Just add another note and choose 'All' or 'Not Done' filter through the navigation bar</p>
+        </div>
+        <div th:if="${filter} == 'TRUE'">
+            <h1>Notebook page is empty</h1>
+            <p class="lead">Just add another note through the navigation bar. Or... <br/>Choose 'All' or 'Not Done' filter and try to do the old plans!</p>
+        </div>
+        <div th:if="${filter} == 'FALSE'">
+            <h1>Notebook page is empty</h1>
+            <p class="lead">Just add another note through the navigation bar. Or... <br/>Congratulations on the successful
+                completion of the plans!</p>
+        </div>
     </div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
 </html>

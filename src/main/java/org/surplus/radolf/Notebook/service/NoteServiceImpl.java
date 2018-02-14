@@ -24,28 +24,21 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Override
-    public Iterable<Note> listAllNotes() {
-        return repository.findAll();
-    }
-
-    @Override
     public Note getNoteById(Integer id) {
         return repository.findOne(id);
     }
 
     @Override
-    public Note saveNote(Note note) {
-        return repository.save(note);
+    public void saveNote(Note note) {
+        repository.save(note);
     }
 
     @Override
-    public Note updateNote(Integer id, String message, boolean done) {
+    public void updateNote(Integer id, String message, boolean done) {
         Note updated = repository.findOne(id);
-        updated.setDate(new Date());
         updated.setDone(done);
         updated.setMessage(message);
         repository.save(updated);
-        return updated;
     }
 
     @Override
@@ -54,7 +47,32 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Override
-    public Page<Note> findAll(Pageable pageable) {
-        return repository.findAll(pageable);
+    public Page<Note> findAllByOrderByDateAsc(Pageable pageable) {
+        return repository.findAllByOrderByDateAsc(pageable);
+    }
+
+    @Override
+    public Page<Note> findAllByOrderByDateDesc(Pageable pageable) {
+        return repository.findAllByOrderByDateDesc(pageable);
+    }
+
+    @Override
+    public Page<Note> findAllByDoneTrueOrderByDateAsc(Pageable pageable) {
+        return repository.findAllByDoneTrueOrderByDateAsc(pageable);
+    }
+
+    @Override
+    public Page<Note> findAllByDoneTrueOrderByDateDesc(Pageable pageable) {
+        return repository.findAllByDoneTrueOrderByDateDesc(pageable);
+    }
+
+    @Override
+    public Page<Note> findAllByDoneFalseOrderByDateAsc(Pageable pageable) {
+        return repository.findAllByDoneFalseOrderByDateAsc(pageable);
+    }
+
+    @Override
+    public Page<Note> findAllByDoneFalseOrderByDateDesc(Pageable pageable) {
+        return repository.findAllByDoneFalseOrderByDateDesc(pageable);
     }
 }
